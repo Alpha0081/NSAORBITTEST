@@ -65,7 +65,7 @@ class Orbit:
         normal[2] = np.sin((90 - self.__inclination) * np.pi / 180)
         return Vector(normal)
 
-    def get_perpendicular(self) -> Vector:
+    def get_perpendicular_vector(self) -> Vector:
         print(np.cos((self.__raan + 90) * np.pi / 180))
         print(np.sin((self.__raan + 90) * np.pi / 180))
         return Vector(np.array((np.cos((self.__raan + 90) * np.pi / 180), np.sin((self.__raan + 90) * np.pi / 180), 0)))
@@ -89,11 +89,11 @@ class Orbit:
     def get_normal_vector(self) -> Vector:
         return self.__normal
 
-    def get_line(self) -> Vector:
+    def get_raan_vector(self) -> Vector:
         return Vector(np.array((np.cos(self.__raan * np.pi / 180), np.sin(self.__raan * np.pi / 180), 0)))
 
     def get_pericenter_vector(self) -> Vector:
-        basis: np.array = self.get_basis(self.__normal, self.get_line()).get_matrix().transpose()
+        basis: np.array = self.get_basis(self.__normal, self.get_raan_vector()).get_matrix().transpose()
         
         inverse = np.linalg.inv(basis)
         x4 = np.cos(self.__pericenter * np.pi / 180) 
@@ -131,7 +131,7 @@ ax.plot([0, 0], [0,0], [0,1], color = "blue")
 ax.plot([0,1],[0,0], [0,0], color = "blue")
 ax.plot([0, 0], [0, 1],[0, 0], color = "blue")
 
-orbit.get_basis(orbit.get_line(), orbit.get_normal_vector()).draw(ax, "green")
+orbit.get_basis(orbit.get_raan_vector(), orbit.get_normal_vector()).draw(ax, "green")
 
 orbit.get_basis(orbit.get_normal_vector(), orbit.get_pericenter_vector()).draw(ax, "red")
 
