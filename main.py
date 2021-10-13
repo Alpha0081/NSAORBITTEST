@@ -1,6 +1,5 @@
 import matplotlib.pyplot as plt
 import numpy as np
-import json
 
 class Vector:
     def __init__(self, coords: np.array) -> None:
@@ -119,16 +118,12 @@ class Orbit:
         x[:50] = x1
         x[50:] = x1 
         matrix = np.array((x, y, z))
-        inverse2 = np.array([[1, 0, 0], [0, 1, 0], [0, 0, 1]])
-        inverse = np.linalg.inv(basis)
-        #x, y = np.meshgrid(x, y)
         return np.dot(basis, matrix).transpose()
 
 orbit = Orbit(0, inclination = 0 , raan = 50, pericenter = 90, semi_major = 2)
 figure = plt.figure()
 
 ax = figure.add_subplot(1, 1, 1, projection="3d")
-#ax.set_axis_off()
 ax.set_xlim(-3, 3)
 ax.set_ylim(-3, 3)
 ax.set_zlim(-3, 3)
@@ -146,6 +141,4 @@ t = orbit.get_trace()
 for coords in t:
     ax.scatter(coords[0], coords[1], coords[2], color = "blue")
 
-#x,y,z = orbit.get_basis()
-#ax.scatter(x, y, z)
 plt.show()
